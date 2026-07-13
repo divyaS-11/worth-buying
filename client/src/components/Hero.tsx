@@ -1,0 +1,60 @@
+function Hero() {
+  return (
+    <section className="bg-gray-50 py-20">
+      <div className="max-w-7xl mx-auto px-6 text-center">
+
+        <h1 className="text-5xl font-bold text-gray-900">
+          Buy Smarter. Waste Less.
+        </h1>
+
+        <p className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto">
+          Discover honest product recommendations to help you make smarter buying
+          decisions. Find products that are truly worth your money.
+        </p>
+
+        <div className="mt-10 flex justify-center">
+          <input
+            type="text"
+            placeholder="Search products..."
+            className="w-full max-w-xl border border-gray-300 rounded-l-lg px-5 py-3 outline-none focus:border-blue-500"
+          />
+
+          <button className="bg-blue-600 text-white px-6 rounded-r-lg hover:bg-blue-700 transition">
+            Search
+          </button>
+        </div>
+
+        <div className="mt-10 flex flex-wrap justify-center gap-4">
+
+          <button className="bg-white border px-5 py-2 rounded-full hover:bg-blue-600 hover:text-white transition">
+            📱 Electronics
+          </button>
+
+          <button className="bg-white border px-5 py-2 rounded-full hover:bg-blue-600 hover:text-white transition">
+            🏠 Home
+          </button>
+
+          <button className="bg-white border px-5 py-2 rounded-full hover:bg-blue-600 hover:text-white transition">
+            👶 Kids
+          </button>
+
+          <button className="bg-white border px-5 py-2 rounded-full hover:bg-blue-600 hover:text-white transition">
+            🎓 Students
+          </button>
+
+          <button className="bg-white border px-5 py-2 rounded-full hover:bg-blue-600 hover:text-white transition">
+            🍳 Kitchen
+          </button>
+
+          <button className="bg-white border px-5 py-2 rounded-full hover:bg-blue-600 hover:text-white transition">
+            💪 Fitness
+          </button>
+
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
+export default Hero;
