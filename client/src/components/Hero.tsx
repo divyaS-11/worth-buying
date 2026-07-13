@@ -1,4 +1,9 @@
-function Hero() {
+type HeroProps = {
+  search: string;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
+};
+
+function Hero({ search, setSearch }: HeroProps) {
   return (
     <section className="bg-gray-50 py-20">
       <div className="max-w-7xl mx-auto px-6 text-center">
@@ -16,6 +21,8 @@ function Hero() {
           <input
             type="text"
             placeholder="Search products..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
             className="w-full max-w-xl border border-gray-300 rounded-l-lg px-5 py-3 outline-none focus:border-blue-500"
           />
 
