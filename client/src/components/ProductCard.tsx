@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 type ProductCardProps = {
   id: number;
   image: string;
+  badge: string;
   name: string;
   price: string;
   rating: string;
@@ -13,6 +14,7 @@ type ProductCardProps = {
 function ProductCard({
   id,
   image,
+  badge,
   name,
   price,
   rating,
@@ -21,11 +23,17 @@ function ProductCard({
   return (
     <div className="max-w-sm bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:-translate-y-2 transition duration-300">
 
-      <img
-  src={image}
-  alt={name}
-  className="w-full h-60 object-cover"
-/>
+     <div className="relative">
+  <img
+    src={image}
+    alt={name}
+    className="w-full h-60 object-cover"
+  />
+
+  <span className="absolute top-3 left-3 bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
+    {badge}
+  </span>
+</div>
 
       <div className="p-5">
 

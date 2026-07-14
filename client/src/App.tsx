@@ -10,10 +10,18 @@ import { products } from "./data/products";
 
 function Home() {
   const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("All");
 
-  const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(search.toLowerCase())
-  );
+ const filteredProducts = products.filter((product) => {
+  const matchesSearch = product.name
+    .toLowerCase()
+    .includes(search.toLowerCase());
+
+  const matchesCategory =
+    category === "All" || product.category === category;
+
+  return matchesSearch && matchesCategory;
+});
 
   return (
     <>
@@ -31,6 +39,7 @@ function Home() {
               key={product.id}
               id={product.id}
               image={product.image}
+              badge={product.badge}
               name={product.name}
               price={product.price}
               rating={product.rating}

@@ -1,9 +1,16 @@
 type HeroProps = {
   search: string;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
+  category: string;
+  setCategory: React.Dispatch<React.SetStateAction<string>>;
 };
 
-function Hero({ search, setSearch }: HeroProps) {
+function Hero({
+  search,
+  setSearch,
+  category,
+  setCategory,
+}: HeroProps) {
   return (
     <section className="bg-gray-50 py-20">
       <div className="max-w-7xl mx-auto px-6 text-center">
@@ -17,6 +24,7 @@ function Hero({ search, setSearch }: HeroProps) {
           decisions. Find products that are truly worth your money.
         </p>
 
+        {/* Search Box */}
         <div className="mt-10 flex justify-center">
           <input
             type="text"
@@ -31,30 +39,29 @@ function Hero({ search, setSearch }: HeroProps) {
           </button>
         </div>
 
+        {/* Category Buttons */}
         <div className="mt-10 flex flex-wrap justify-center gap-4">
 
-          <button className="bg-white border px-5 py-2 rounded-full hover:bg-blue-600 hover:text-white transition">
-            📱 Electronics
+          <button
+            onClick={() => setCategory("All")}
+            className={`px-5 py-2 rounded-full border transition ${
+              category === "All"
+                ? "bg-blue-600 text-white"
+                : "bg-white hover:bg-blue-600 hover:text-white"
+            }`}
+          >
+            🌐 All
           </button>
 
-          <button className="bg-white border px-5 py-2 rounded-full hover:bg-blue-600 hover:text-white transition">
-            🏠 Home
-          </button>
-
-          <button className="bg-white border px-5 py-2 rounded-full hover:bg-blue-600 hover:text-white transition">
-            👶 Kids
-          </button>
-
-          <button className="bg-white border px-5 py-2 rounded-full hover:bg-blue-600 hover:text-white transition">
-            🎓 Students
-          </button>
-
-          <button className="bg-white border px-5 py-2 rounded-full hover:bg-blue-600 hover:text-white transition">
-            🍳 Kitchen
-          </button>
-
-          <button className="bg-white border px-5 py-2 rounded-full hover:bg-blue-600 hover:text-white transition">
-            💪 Fitness
+          <button
+            onClick={() => setCategory("Earbuds")}
+            className={`px-5 py-2 rounded-full border transition ${
+              category === "Earbuds"
+                ? "bg-blue-600 text-white"
+                : "bg-white hover:bg-blue-600 hover:text-white"
+            }`}
+          >
+            🎧 Earbuds
           </button>
 
         </div>
