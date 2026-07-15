@@ -34,7 +34,7 @@ function ProductDetails() {
       </h1>
 
       <p className="text-blue-600 text-3xl font-bold mt-3">
-        {product.price}
+        ₹{product.price.toLocaleString()}
       </p>
 
       <p className="text-yellow-500 mt-2 text-lg">
