@@ -50,7 +50,7 @@ const renderStars = (rating: number) => {
      <div className="relative">
      <button
   onClick={toggleWishlist}
-  className="absolute top-3 right-3 bg-blue-600 rounded-full w-10 h-10 shadow flex items-center justify-center text-2xl text-white hover:bg-blue-700 transition"
+  className="absolute top-3 right-3 z-20 bg-blue-600 rounded-full w-10 h-10 shadow-lg flex items-center justify-center text-2xl text-white hover:bg-blue-700 transition"
 >
   {wishlist.includes(id) ? "❤️" : "🤍"}
 </button>

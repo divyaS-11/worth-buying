@@ -4,7 +4,9 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import ProductCard from "./components/ProductCard";
+import Footer from "./components/Footer";
 import ProductDetails from "./pages/ProductDetails";
+import Wishlist from "./pages/Wishlist";
 
 import { products } from "./data/products";
 
@@ -106,14 +108,17 @@ function Home() {
 
 function App() {
   return (
-    <>
-      <Navbar />
+  <>
+  <Navbar />
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/product/:id" element={<ProductDetails />} />
-      </Routes>
-    </>
+  <Routes>
+    <Route path="/" element={<Home />} />
+    <Route path="/product/:id" element={<ProductDetails />} />
+    <Route path="/wishlist" element={<Wishlist />} />
+  </Routes>
+
+  <Footer />
+</>
   );
 }
 
