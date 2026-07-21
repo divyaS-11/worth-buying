@@ -5,15 +5,28 @@ import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import ProductCard from "./components/ProductCard";
 import Footer from "./components/Footer";
+
 import ProductDetails from "./pages/ProductDetails";
 import Wishlist from "./pages/Wishlist";
+import Compare from "./pages/Compare";
 
 import { products } from "./data/products";
 
-function Home() {
+type HomeProps = {
+  wishlist: number[];
+  setWishlist: React.Dispatch<React.SetStateAction<number[]>>;
+  compareList: number[];
+  setCompareList: React.Dispatch<React.SetStateAction<number[]>>;
+};
+
+function Home({
+  wishlist,
+  setWishlist,
+  compareList,
+  setCompareList,
+}: HomeProps) {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
-  const [wishlist, setWishlist] = useState<number[]>([]);
   const [sortBy, setSortBy] = useState("default");
 
   const filteredProducts = products
@@ -29,21 +42,15 @@ function Home() {
     })
     .sort((a, b) => {
       if (sortBy === "priceLow") {
-        return (
-          Number(a.price.replace(/[₹,]/g, "")) -
-          Number(b.price.replace(/[₹,]/g, ""))
-        );
+        return a.price - b.price;
       }
 
       if (sortBy === "priceHigh") {
-        return (
-          Number(b.price.replace(/[₹,]/g, "")) -
-          Number(a.price.replace(/[₹,]/g, ""))
-        );
+        return b.price - a.price;
       }
 
       if (sortBy === "rating") {
-        return parseFloat(b.rating) - parseFloat(a.rating);
+        return b.rating - a.rating;
       }
 
       return 0;
@@ -91,6 +98,8 @@ function Home() {
               description={product.description}
               wishlist={wishlist}
               setWishlist={setWishlist}
+              compareList={compareList}
+              setCompareList={setCompareList}
             />
           ))}
         </div>
@@ -107,18 +116,59 @@ function Home() {
 }
 
 function App() {
+  const [wishlist, setWishlist] = useState<number[]>([]);
+  const [compareList, setCompareList] = useState<number[]>([]);
+
   return (
-  <>
-  <Navbar />
+    <>
+      <Navbar />
 
-  <Routes>
-    <Route path="/" element={<Home />} />
-    <Route path="/product/:id" element={<ProductDetails />} />
-    <Route path="/wishlist" element={<Wishlist />} />
-  </Routes>
+      <Routes>
 
-  <Footer />
-</>
+        <Route
+          path="/"
+          element={
+            <Home
+              wishlist={wishlist}
+              setWishlist={setWishlist}
+              compareList={compareList}
+              setCompareList={setCompareList}
+            />
+          }
+        />
+
+        <Route
+          path="/product/:id"
+          element={<ProductDetails />}
+        />
+
+        <Route
+          path="/wishlist"
+          element={
+            <Wishlist
+              wishlist={wishlist}
+              setWishlist={setWishlist}
+              products={products}
+              compareList={compareList}
+              setCompareList={setCompareList}
+            />
+          }
+        />
+
+        <Route
+          path="/compare"
+          element={
+            <Compare
+              compareList={compareList}
+              products={products}
+            />
+          }
+        />
+
+      </Routes>
+
+      <Footer />
+    </>
   );
 }
 

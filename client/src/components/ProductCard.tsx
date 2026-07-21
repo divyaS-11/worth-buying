@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 
 type ProductCardProps = {
@@ -6,13 +5,16 @@ type ProductCardProps = {
   image: string;
   badge: string;
   name: string;
-  price: string;
-  rating: string;
+  price: number;
+  rating: number;
   reviews: number;
   description: string;
 
   wishlist: number[];
   setWishlist: React.Dispatch<React.SetStateAction<number[]>>;
+
+  compareList: number[];
+  setCompareList: React.Dispatch<React.SetStateAction<number[]>>;
 };
 
 function ProductCard({
@@ -22,50 +24,71 @@ function ProductCard({
   name,
   price,
   rating,
-  reviews,  
+  reviews,
   description,
   wishlist,
   setWishlist,
+  compareList,
+  setCompareList,
 }: ProductCardProps) {
-  const toggleWishlist = () => {
-  if (wishlist.includes(id)) {
-    setWishlist(wishlist.filter((item) => item !== id));
-  } else {
-    setWishlist([...wishlist, id]);
-  }
-};
-const renderStars = (rating: number) => {
-  const fullStars = Math.floor(rating);
-  const emptyStars = 5 - fullStars;
 
-  return (
-    <>
-      {"★".repeat(fullStars)}
-      {"☆".repeat(emptyStars)}
-    </>
-  );
-};
+  const toggleWishlist = () => {
+    if (wishlist.includes(id)) {
+      setWishlist(wishlist.filter((item) => item !== id));
+    } else {
+      setWishlist([...wishlist, id]);
+    }
+  };
+
+  const toggleCompare = () => {
+    if (compareList.includes(id)) {
+      setCompareList(compareList.filter((item) => item !== id));
+    } else {
+      if (compareList.length < 2) {
+        setCompareList([...compareList, id]);
+      } else {
+        alert("You can compare only 2 products.");
+      }
+    }
+  };
+
+  const renderStars = (rating: number) => {
+    const fullStars = Math.floor(rating);
+    const emptyStars = 5 - fullStars;
+
+    return (
+      <>
+        {"★".repeat(fullStars)}
+        {"☆".repeat(emptyStars)}
+      </>
+    );
+  };
+
   return (
     <div className="max-w-sm bg-white rounded-xl shadow-md overflow-hidden hover:shadow-2xl hover:-translate-y-3 hover:scale-105 transition-all duration-300 cursor-pointer">
-     <div className="relative">
-     <button
-  onClick={toggleWishlist}
-  className="absolute top-3 right-3 z-20 bg-blue-600 rounded-full w-10 h-10 shadow-lg flex items-center justify-center text-2xl text-white hover:bg-blue-700 transition"
->
-  {wishlist.includes(id) ? "❤️" : "🤍"}
-</button>
-  <div className="overflow-hidden">
-  <img
-    src={image}
-    alt={name}
-    className="w-full h-60 object-cover hover:scale-110 transition-transform duration-300"
-  />
-</div>
 
-  <span className="absolute top-3 left-3 bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
-    {badge}
-  </span>
-</div>
+      <div className="relative">
+
+        <button
+          onClick={toggleWishlist}
+          className="absolute top-3 right-3 z-20 bg-blue-600 rounded-full w-10 h-10 shadow-lg flex items-center justify-center text-2xl text-white hover:bg-blue-700 transition"
+        >
+          {wishlist.includes(id) ? "❤️" : "🤍"}
+        </button>
+
+        <span className="absolute top-3 left-3 bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
+          {badge}
+        </span>
+
+        <div className="overflow-hidden">
+          <img
+            src={image}
+            alt={name}
+            className="w-full h-60 object-cover hover:scale-110 transition-transform duration-300"
+          />
+        </div>
+
+      </div>
 
       <div className="p-5">
 
@@ -74,28 +97,44 @@ const renderStars = (rating: number) => {
         </h2>
 
         <div className="mt-2">
- <div className="text-yellow-500 text-lg">
-  {renderStars(rating)}
-</div>
+          <div className="text-yellow-500 text-lg">
+            {renderStars(rating)}
+          </div>
 
-  <p className="text-sm text-gray-600">
-    {rating} ({reviews.toLocaleString()} Reviews)
-  </p>
-</div>
+          <p className="text-sm text-gray-600">
+            {rating} ({reviews.toLocaleString()} Reviews)
+          </p>
+        </div>
+
         <p className="text-2xl font-bold text-blue-600 mt-3">
-  ₹{price.toLocaleString()}
-</p>
+          ₹{price.toLocaleString()}
+        </p>
 
         <p className="text-gray-600 mt-3">
           {description}
         </p>
 
-        <Link
-        to={`/product/${id}`}
-        className="block mt-5 w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition text-center"
->
-  View Details
-</Link>
+        <div className="mt-5 flex gap-3">
+
+          <Link
+            to={`/product/${id}`}
+            className="flex-1 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition text-center"
+          >
+            View Details
+          </Link>
+
+          <button
+            onClick={toggleCompare}
+            className={`px-4 rounded-lg transition ${
+              compareList.includes(id)
+                ? "bg-green-600 text-white"
+                : "bg-gray-200 hover:bg-gray-300"
+            }`}
+          >
+            {compareList.includes(id) ? "✓ Added" : "Compare"}
+          </button>
+
+        </div>
 
       </div>
 

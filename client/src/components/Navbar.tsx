@@ -42,6 +42,15 @@ function Navbar() {
               ❤️ Wishlist
             </Link>
           </li>
+            <li>
+  <Link
+    to="/compare"
+    className="hover:text-blue-600 transition-colors duration-200"
+  >
+    📊 Compare
+  </Link>
+</li>
+
 
           <li>
             <a
