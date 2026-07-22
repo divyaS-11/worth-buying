@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
@@ -116,12 +116,23 @@ function Home({
 }
 
 function App() {
-  const [wishlist, setWishlist] = useState<number[]>([]);
+ const [wishlist, setWishlist] = useState<number[]>(() => {
+  const savedWishlist = localStorage.getItem("wishlist");
+
+  return savedWishlist ? JSON.parse(savedWishlist) : [];
+});
   const [compareList, setCompareList] = useState<number[]>([]);
+
+  useEffect(() => {
+  localStorage.setItem("wishlist", JSON.stringify(wishlist));
+}, [wishlist]);
 
   return (
     <>
-      <Navbar />
+      <Navbar
+  wishlistCount={wishlist.length}
+  compareCount={compareList.length}
+/>
 
       <Routes>
 

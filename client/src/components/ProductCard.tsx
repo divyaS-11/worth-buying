@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 type ProductCardProps = {
   id: number;
@@ -31,14 +32,20 @@ function ProductCard({
   compareList,
   setCompareList,
 }: ProductCardProps) {
+const toggleWishlist = () => {
+  if (wishlist.includes(id)) {
+    setWishlist(wishlist.filter((item) => item !== id));
 
-  const toggleWishlist = () => {
-    if (wishlist.includes(id)) {
-      setWishlist(wishlist.filter((item) => item !== id));
-    } else {
-      setWishlist([...wishlist, id]);
-    }
-  };
+    toast("💔 Removed from Wishlist", {
+      icon: "❌",
+    });
+
+  } else {
+    setWishlist([...wishlist, id]);
+
+    toast.success("❤️ Added to Wishlist");
+  }
+};
 
   const toggleCompare = () => {
     if (compareList.includes(id)) {
