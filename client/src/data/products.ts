@@ -14,7 +14,24 @@ export const products = [
     price: 1499,
     rating: 4.5,
     reviews: 1245,
+    worthScore: 9.4,
     description: "Best wireless earbuds for students.",
+
+pros: [
+  "Excellent sound quality",
+  "40-hour battery life",
+  "Comfortable for long use",
+],
+
+cons: [
+  "No wireless charging",
+  "Plastic charging case",
+],
+bestFor: [
+  "Students",
+  "Office Work",
+  "Music Lovers",
+],
   },
   {
     id: 2,
@@ -25,7 +42,24 @@ export const products = [
     price: 1299,
     rating: 4.4,
     reviews: 2103,
-    description: "Powerful bass with long battery life.",
+    worthScore: 9.4,
+    description: "Best wireless earbuds for students.",
+
+pros: [
+  "Excellent sound quality",
+  "40-hour battery life",
+  "Comfortable for long use",
+],
+
+cons: [
+  "No wireless charging",
+  "Plastic charging case",
+],
+bestFor: [
+  "Students",
+  "Office Work",
+  "Music Lovers",
+],
   },
   {
     id: 3,
@@ -36,29 +70,79 @@ export const products = [
     price: 2299,
     rating: 4.7,
     reviews: 980,
-    description: "Premium sound quality with deep bass.",
+    worthScore: 9.4,
+    description: "Best wireless earbuds for students.",
+
+pros: [
+  "Excellent sound quality",
+  "40-hour battery life",
+  "Comfortable for long use",
+],
+
+cons: [
+  "No wireless charging",
+  "Plastic charging case",
+],
+bestFor: [
+  "Students",
+  "Office Work",
+  "Music Lovers",
+],
   },
   {
     id: 4,
     name: "Noise ColorFit Pro",
     image: watchImage1,
-    category: "Smart Watch",
+    category: "Smart Watches",
     badge: "Trending",
     price: 2999,
     rating: 4.5,
     reviews: 1850,
-    description:
-      "Stylish smartwatch with heart rate monitoring and long battery life.",
+    worthScore: 9.4,
+    description: "Best wireless earbuds for students.",
+
+pros: [
+  "Excellent sound quality",
+  "40-hour battery life",
+  "Comfortable for long use",
+],
+
+cons: [
+  "No wireless charging",
+  "Plastic charging case",
+],
+bestFor: [
+  "Students",
+  "Office Work",
+  "Music Lovers",
+],
   },
   {
     id: 5,
     name: "Grey ColorFit Pro",
     image: watchImage2,
-    category: "Smart Watch",
+    category: "Smart Watches",
     badge: "Editor's Choice",
     price: 2999,
     rating: 3.5,
     reviews: 1850,
-    description: "Long battery life and cool design.",
+    worthScore: 9.4,
+    description: "Best wireless earbuds for students.",
+
+pros: [
+  "Excellent sound quality",
+  "40-hour battery life",
+  "Comfortable for long use",
+],
+
+cons: [
+  "No wireless charging",
+  "Plastic charging case",
+],
+bestFor: [
+  "Students",
+  "Office Work",
+  "Music Lovers",
+],
   },
 ];

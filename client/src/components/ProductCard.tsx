@@ -72,7 +72,7 @@ const toggleWishlist = () => {
   };
 
   return (
-    <div className="max-w-sm bg-white rounded-xl shadow-md overflow-hidden hover:shadow-2xl hover:-translate-y-3 hover:scale-105 transition-all duration-300 cursor-pointer">
+    <div className="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
 
       <div className="relative">
 
@@ -88,12 +88,12 @@ const toggleWishlist = () => {
         </span>
 
         <div className="overflow-hidden">
-          <img
-            src={image}
-            alt={name}
-            className="w-full h-60 object-cover hover:scale-110 transition-transform duration-300"
-          />
-        </div>
+  <img
+    src={image}
+    alt={name}
+    className="w-full h-60 object-cover transition-transform duration-300 hover:scale-105"
+  />
+</div>
 
       </div>
 

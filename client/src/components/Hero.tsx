@@ -64,6 +64,17 @@ function Hero({
             🎧 Earbuds
           </button>
 
+          <button
+  onClick={() => setCategory("Smart Watches")}
+  className={`px-5 py-2 rounded-full border transition ${
+    category === "Smart Watches"
+      ? "bg-blue-600 text-white"
+      : "bg-white hover:bg-blue-600 hover:text-white"
+  }`}
+>
+  ⌚ Smart Watches
+</button>
+
         </div>
 
       </div>

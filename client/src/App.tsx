@@ -10,6 +10,7 @@ import ProductDetails from "./pages/ProductDetails";
 import Wishlist from "./pages/Wishlist";
 import Compare from "./pages/Compare";
 
+
 import { products } from "./data/products";
 
 type HomeProps = {
@@ -55,6 +56,7 @@ function Home({
 
       return 0;
     });
+
 
   return (
     <>
