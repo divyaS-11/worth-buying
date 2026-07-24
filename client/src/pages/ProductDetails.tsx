@@ -1,12 +1,21 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { products } from "../data/products";
 
 function ProductDetails() {
   const { id } = useParams();
+  
 
   const product = products.find(
     (item) => item.id === Number(id)
   );
+
+  const relatedProducts = products
+  .filter(
+    (item) =>
+      item.category === product?.category &&
+      item.id !== product?.id
+  )
+  .slice(0, 3);
 
   if (!product) {
     return (
@@ -18,37 +27,78 @@ function ProductDetails() {
     );
   }
 
+
   return (
     <section className="max-w-5xl mx-auto px-6 py-12">
 
-      {/* Product Image */}
-      <img
-        src={product.image}
-        alt={product.name}
-        className="w-full max-w-md mx-auto rounded-xl"
-      />
+      <div className="grid md:grid-cols-2 gap-12 items-start">
 
-      {/* Product Name */}
-      <h1 className="text-4xl font-bold mt-8">
-        {product.name}
-      </h1>
+  {/* Left Side - Image */}
+  <div>
+    <img
+      src={product.image}
+      alt={product.name}
+      className="w-full rounded-2xl shadow-lg"
+    />
+  </div>
 
-      {/* Price */}
-      <p className="text-blue-600 text-3xl font-bold mt-3">
-        ₹{product.price.toLocaleString()}
+  {/* Right Side - Product Info */}
+  <div>
+
+    <h1 className="text-4xl font-bold">
+      {product.name}
+    </h1>
+
+    <p className="text-blue-600 text-4xl font-bold mt-4">
+      ₹{product.price.toLocaleString()}
+    </p>
+
+    <p className="text-yellow-500 text-lg mt-3">
+      ⭐ {product.rating} ({product.reviews.toLocaleString()} Reviews)
+    </p>
+
+    <div className="flex flex-wrap gap-3 mt-6">
+      {product.bestFor.map((item, index) => (
+        <span
+          key={index}
+          className="bg-blue-100 text-blue-700 px-4 py-2 rounded-full font-medium"
+        >
+          {item}
+        </span>
+      ))}
+    </div>
+
+    <div className="bg-blue-50 rounded-xl p-5 mt-6">
+      <h3 className="font-bold text-blue-700">
+        ⭐ Worth Buying Score
+      </h3>
+
+      <p className="text-4xl font-bold text-blue-600 mt-2">
+        {product.worthScore}/10
       </p>
+    </div>
 
-      {/* Rating */}
-      <p className="text-yellow-500 mt-2 text-lg">
-        ⭐ {product.rating} ({product.reviews.toLocaleString()} Reviews)
-      </p>
+    <a
+      href="https://www.amazon.in"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-block mt-8 bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg text-lg font-semibold transition"
+    >
+      🛒 Buy on Amazon
+    </a>
+
+  </div>
+
+</div>
+
+<hr className="my-12 border-gray-300" />
 
       {/* Description */}
       <h2 className="text-2xl font-bold mt-10">
         Description
       </h2>
 
-      <p className="text-gray-600 mt-3">
+      <p className="text-gray-700 leading-8 mt-4 text-lg">
         {product.description}
       </p>
 
@@ -56,7 +106,7 @@ function ProductDetails() {
       <div className="grid md:grid-cols-2 gap-8 mt-10">
 
         {/* Pros */}
-        <div className="bg-green-50 p-6 rounded-xl shadow">
+        <div className="bg-green-50 p-6 rounded-2xl shadow-md">
           <h3 className="text-2xl font-bold text-green-700 mb-4">
             ✅ Pros
           </h3>
@@ -71,7 +121,7 @@ function ProductDetails() {
         </div>
 
         {/* Cons */}
-        <div className="bg-red-50 p-6 rounded-xl shadow">
+        <div className="bg-red-50 p-6 rounded-2xl shadow-md">
           <h3 className="text-2xl font-bold text-red-700 mb-4">
             ❌ Cons
           </h3>
@@ -89,9 +139,7 @@ function ProductDetails() {
        
        <div className="mt-10">
 
-  <h2 className="text-2xl font-bold mb-5">
-    🎯 Best For
-  </h2>
+
 
   <div className="flex flex-wrap gap-3">
     {product.bestFor.map((item, index) => (
@@ -108,9 +156,7 @@ function ProductDetails() {
 
 <div className="mt-10 bg-blue-50 rounded-xl p-6 shadow">
 
-  <h2 className="text-2xl font-bold text-blue-700">
-    ⭐ Worth Buying Score
-  </h2>
+  
 
   <p className="text-5xl font-bold text-blue-600 mt-4">
     {product.worthScore}/10
@@ -121,24 +167,79 @@ function ProductDetails() {
   </p>
 
 </div>
-      {/* Verdict */}
-      <h2 className="text-2xl font-bold mt-10">
-        Our Verdict
-      </h2>
+      <div className="mt-12 bg-gray-50 rounded-2xl p-6 shadow-md">
 
-      <p className="text-gray-600 mt-3">
-        This product offers excellent value for money and is one of our recommended choices in its price range.
+  <h2 className="text-2xl font-bold">
+    🏆 Our Verdict
+  </h2>
+
+  <p className="text-gray-700 mt-4 leading-8">
+    This product offers excellent value for money and is one of our recommended choices in its price range.
+  </p>
+
+</div>
+
+{/* Related Products */}
+
+<div className="mt-16">
+
+  <h2 className="text-3xl font-bold mb-8">
+    You May Also Like
+  </h2>
+
+  <hr className="my-10 border-gray-300 md:hidden" />
+
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+   {relatedProducts.map((item) => (
+
+  <div
+    key={item.id}
+    className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition"
+  >
+
+    <img
+      src={item.image}
+      alt={item.name}
+      className="w-full h-52 object-cover"
+    />
+
+    <div className="p-5">
+
+      <h3 className="text-xl font-semibold">
+        {item.name}
+      </h3>
+
+      <p className="text-blue-600 font-bold mt-2">
+        ₹{item.price.toLocaleString()}
       </p>
 
-      {/* Buy Button */}
-<a
-  href="https://www.amazon.in"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="inline-block mt-10 bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg text-lg font-semibold transition"
+      <p className="text-yellow-500 mt-2">
+        ⭐ {item.rating}
+      </p>
+
+      <Link
+  to={`/product/${item.id}`}
+  onClick={() =>
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    })
+  }
+  className="inline-block mt-5 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg transition"
 >
-  🛒 Buy on Amazon
-</a>
+  View Details
+</Link>
+
+    </div>
+
+  </div>
+
+))}
+
+  </div>
+
+</div>
 
     </section>
   );

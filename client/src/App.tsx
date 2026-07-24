@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import ProductCard from "./components/ProductCard";
 import Footer from "./components/Footer";
-
-import ProductDetails from "./pages/ProductDetails";
 import Wishlist from "./pages/Wishlist";
 import Compare from "./pages/Compare";
+import ProductDetailsWrapper from "./pages/ProductDetailsWrapper";
+import ScrollToTop from "./components/ScrollToTop";
 
 
 import { products } from "./data/products";
@@ -18,6 +17,8 @@ type HomeProps = {
   setWishlist: React.Dispatch<React.SetStateAction<number[]>>;
   compareList: number[];
   setCompareList: React.Dispatch<React.SetStateAction<number[]>>;
+  category: string;
+  setCategory: React.Dispatch<React.SetStateAction<string>>;
 };
 
 function Home({
@@ -25,16 +26,23 @@ function Home({
   setWishlist,
   compareList,
   setCompareList,
+  category,
+  setCategory,
 }: HomeProps) {
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("All");
   const [sortBy, setSortBy] = useState("default");
 
   const filteredProducts = products
     .filter((product) => {
-      const matchesSearch = product.name
-        .toLowerCase()
-        .includes(search.toLowerCase());
+     const searchText = search.toLowerCase().trim();
+
+const matchesSearch =
+  product.name.toLowerCase().includes(searchText) ||
+  product.category.toLowerCase().includes(searchText) ||
+  product.description.toLowerCase().includes(searchText) ||
+  product.bestFor.some((item) =>
+    item.toLowerCase().includes(searchText)
+  );
 
       const matchesCategory =
         category === "All" || product.category === category;
@@ -124,16 +132,20 @@ function App() {
   return savedWishlist ? JSON.parse(savedWishlist) : [];
 });
   const [compareList, setCompareList] = useState<number[]>([]);
+  const [category, setCategory] = useState("All");
 
   useEffect(() => {
   localStorage.setItem("wishlist", JSON.stringify(wishlist));
 }, [wishlist]);
 
   return (
-    <>
-      <Navbar
+   <>
+  <ScrollToTop />
+
+  <Navbar
   wishlistCount={wishlist.length}
   compareCount={compareList.length}
+  setCategory={setCategory}
 />
 
       <Routes>
@@ -142,18 +154,20 @@ function App() {
           path="/"
           element={
             <Home
-              wishlist={wishlist}
-              setWishlist={setWishlist}
-              compareList={compareList}
-              setCompareList={setCompareList}
-            />
+  wishlist={wishlist}
+  setWishlist={setWishlist}
+  compareList={compareList}
+  setCompareList={setCompareList}
+  category={category}
+  setCategory={setCategory}
+/>
           }
         />
 
-        <Route
-          path="/product/:id"
-          element={<ProductDetails />}
-        />
+ <Route
+  path="/product/:id"
+  element={<ProductDetailsWrapper />}
+/>
 
         <Route
           path="/wishlist"

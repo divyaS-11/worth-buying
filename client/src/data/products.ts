@@ -99,7 +99,7 @@ bestFor: [
     rating: 4.5,
     reviews: 1850,
     worthScore: 9.4,
-    description: "Best wireless earbuds for students.",
+    description: "Smartwatch with heart rate monitoring and AMOLED display.",
 
 pros: [
   "Excellent sound quality",
@@ -127,7 +127,7 @@ bestFor: [
     rating: 3.5,
     reviews: 1850,
     worthScore: 9.4,
-    description: "Best wireless earbuds for students.",
+   description: "Smartwatch with heart rate monitoring and AMOLED display.",
 
 pros: [
   "Excellent sound quality",
