@@ -32,20 +32,21 @@ function ProductCard({
   compareList,
   setCompareList,
 }: ProductCardProps) {
-const toggleWishlist = () => {
-  if (wishlist.includes(id)) {
-    setWishlist(wishlist.filter((item) => item !== id));
 
-    toast("💔 Removed from Wishlist", {
-      icon: "❌",
-    });
+  const toggleWishlist = () => {
+    if (wishlist.includes(id)) {
+      setWishlist(wishlist.filter((item) => item !== id));
 
-  } else {
-    setWishlist([...wishlist, id]);
+      toast("Removed from Wishlist", {
+        icon: "💔",
+      });
 
-    toast.success("❤️ Added to Wishlist");
-  }
-};
+    } else {
+      setWishlist([...wishlist, id]);
+
+      toast.success("Added to Wishlist ❤️");
+    }
+  };
 
   const toggleCompare = () => {
     if (compareList.includes(id)) {
@@ -72,31 +73,35 @@ const toggleWishlist = () => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
+    <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
 
+      {/* Image */}
       <div className="relative">
 
+        {/* Wishlist */}
         <button
           onClick={toggleWishlist}
-          className="absolute top-3 right-3 z-20 bg-blue-600 rounded-full w-10 h-10 shadow-lg flex items-center justify-center text-2xl text-white hover:bg-blue-700 transition"
+          className="absolute top-3 right-3 z-20 bg-blue-600 w-10 h-10 rounded-full flex items-center justify-center text-xl shadow-lg hover:bg-blue-700 transition"
         >
           {wishlist.includes(id) ? "❤️" : "🤍"}
         </button>
 
+        {/* Badge */}
         <span className="absolute top-3 left-3 bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
           {badge}
         </span>
 
         <div className="overflow-hidden">
-  <img
-    src={image}
-    alt={name}
-    className="w-full h-60 object-cover transition-transform duration-300 hover:scale-105"
-  />
-</div>
+          <img
+            src={image}
+            alt={name}
+            className="w-full h-60 object-cover hover:scale-105 transition-transform duration-300"
+          />
+        </div>
 
       </div>
 
+      {/* Product Info */}
       <div className="p-5">
 
         <h2 className="text-xl font-bold text-gray-900">
@@ -104,38 +109,41 @@ const toggleWishlist = () => {
         </h2>
 
         <div className="mt-2">
+
           <div className="text-yellow-500 text-lg">
             {renderStars(rating)}
           </div>
 
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-500">
             {rating} ({reviews.toLocaleString()} Reviews)
           </p>
+
         </div>
 
         <p className="text-2xl font-bold text-blue-600 mt-3">
           ₹{price.toLocaleString()}
         </p>
 
-        <p className="text-gray-600 mt-3">
+        <p className="text-gray-600 mt-3 leading-6">
           {description}
         </p>
 
-        <div className="mt-5 flex gap-3">
+        {/* Buttons */}
+        <div className="mt-6 flex gap-3">
 
           <Link
             to={`/product/${id}`}
-            className="flex-1 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition text-center"
+            className="flex-1 bg-blue-600 text-white py-3 rounded-lg text-center hover:bg-blue-700 transition font-medium"
           >
             View Details
           </Link>
 
           <button
             onClick={toggleCompare}
-            className={`px-4 rounded-lg transition ${
+            className={`px-4 rounded-lg font-medium transition ${
               compareList.includes(id)
                 ? "bg-green-600 text-white"
-                : "bg-gray-200 hover:bg-gray-300"
+                : "bg-gray-200 hover:bg-gray-300 text-gray-700"
             }`}
           >
             {compareList.includes(id) ? "✓ Added" : "Compare"}

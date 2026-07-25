@@ -1,4 +1,5 @@
 import { Link, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { products } from "../data/products";
 
 function ProductDetails() {
@@ -9,6 +10,26 @@ function ProductDetails() {
     (item) => item.id === Number(id)
   );
 
+  useEffect(() => {
+  const viewed =
+    JSON.parse(localStorage.getItem("recentProducts") || "[]");
+
+  const updated = [
+    product?.id,
+    ...viewed.filter((id: number) => id !== product?.id),
+  ].slice(0, 5);
+
+  localStorage.setItem(
+    "recentProducts",
+    JSON.stringify(updated)
+  );
+}, [product]);
+
+  const [selectedImage, setSelectedImage] = useState(0);
+  useEffect(() => {
+  setSelectedImage(0);
+}, [id]);
+
   const relatedProducts = products
   .filter(
     (item) =>
@@ -16,6 +37,16 @@ function ProductDetails() {
       item.id !== product?.id
   )
   .slice(0, 3);
+
+  const recentIds: number[] = JSON.parse(
+  localStorage.getItem("recentProducts") || "[]"
+);
+
+const recentProducts = products.filter(
+  (item) =>
+    recentIds.includes(item.id) &&
+    item.id !== product?.id
+);
 
   if (!product) {
     return (
@@ -33,14 +64,43 @@ function ProductDetails() {
 
       <div className="grid md:grid-cols-2 gap-12 items-start">
 
-  {/* Left Side - Image */}
-  <div>
-    <img
-      src={product.image}
-      alt={product.name}
-      className="w-full rounded-2xl shadow-lg"
-    />
+  {/* Left Side - Product Gallery */}
+
+<div>
+
+  <div className="overflow-hidden rounded-2xl shadow-lg">
+
+  <img
+    src={product.images[selectedImage]}
+    alt={product.name}
+    className="w-full transition-transform duration-300 hover:scale-125 cursor-zoom-in"
+  />
+
+</div>
+
+  {/* Thumbnail Images */}
+
+  <div className="flex gap-3 mt-4">
+
+    {product.images.map((img, index) => (
+
+      <img
+        key={index}
+        src={img}
+        alt={`${product.name}-${index}`}
+        onClick={() => setSelectedImage(index)}
+        className={`w-20 h-20 rounded-lg cursor-pointer border-2 transition ${
+          selectedImage === index
+            ? "border-blue-600"
+            : "border-gray-300"
+        }`}
+      />
+
+    ))}
+
   </div>
+
+</div>
 
   {/* Right Side - Product Info */}
   <div>
@@ -78,14 +138,36 @@ function ProductDetails() {
       </p>
     </div>
 
-    <a
-      href="https://www.amazon.in"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="inline-block mt-8 bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg text-lg font-semibold transition"
-    >
-      🛒 Buy on Amazon
-    </a>
+   <div className="flex flex-wrap gap-4 mt-8">
+
+  <a
+    href={product.amazonLink}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg text-lg font-semibold transition"
+  >
+    🛒 Buy on Amazon
+  </a>
+
+  <button
+    onClick={async () => {
+      if (navigator.share) {
+        await navigator.share({
+          title: product.name,
+          text: `Check out ${product.name}`,
+          url: window.location.href,
+        });
+      } else {
+        await navigator.clipboard.writeText(window.location.href);
+        alert("✅ Product link copied!");
+      }
+    }}
+    className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition"
+  >
+    📤 Share
+  </button>
+
+</div>
 
   </div>
 
@@ -101,6 +183,47 @@ function ProductDetails() {
       <p className="text-gray-700 leading-8 mt-4 text-lg">
         {product.description}
       </p>
+
+      {/* Specifications */}
+
+<div className="mt-12">
+
+  <h2 className="text-3xl font-bold mb-6">
+    📋 Specifications
+  </h2>
+
+  <div className="overflow-hidden rounded-2xl shadow-md border">
+
+    <table className="w-full">
+
+      <tbody>
+
+        {Object.entries(product.specifications).map(([key, value]) => (
+
+          <tr
+            key={key}
+            className="border-b last:border-b-0"
+          >
+
+            <td className="bg-gray-100 font-semibold px-6 py-4 w-1/3">
+              {key}
+            </td>
+
+            <td className="px-6 py-4">
+              {value}
+            </td>
+
+          </tr>
+
+        ))}
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
 
       {/* Pros & Cons */}
       <div className="grid md:grid-cols-2 gap-8 mt-10">
@@ -178,6 +301,148 @@ function ProductDetails() {
   </p>
 
 </div>
+
+{/* Customer Reviews */}
+
+<div className="mt-16">
+
+  <h2 className="text-3xl font-bold mb-8">
+    ⭐ Customer Reviews
+  </h2>
+
+  <div className="space-y-6">
+
+    {product.customerReviews.map((review, index) => (
+
+      <div
+        key={index}
+        className="bg-white rounded-2xl shadow-md p-6"
+      >
+
+        <div className="flex items-center gap-4">
+
+          <div className="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center text-xl font-bold">
+            {review.name.charAt(0)}
+          </div>
+
+          <div>
+
+            <h3 className="font-bold text-lg">
+              {review.name}
+            </h3>
+
+            <p className="text-yellow-500">
+              {"⭐".repeat(review.rating)}
+            </p>
+
+          </div>
+
+        </div>
+
+        <p className="mt-4 text-gray-700 leading-7">
+          {review.comment}
+        </p>
+
+      </div>
+
+    ))}
+
+  </div>
+
+</div>
+
+{/* FAQ */}
+
+<div className="mt-16">
+
+  <h2 className="text-3xl font-bold mb-8">
+    ❓ Frequently Asked Questions
+  </h2>
+
+  <div className="space-y-4">
+
+    {product.faq.map((item, index) => (
+
+      <details
+        key={index}
+        className="border rounded-xl p-5 shadow-sm group"
+      >
+
+        <summary className="cursor-pointer font-semibold text-lg flex justify-between items-center">
+
+          {item.question}
+
+          <span className="group-open:rotate-180 transition">
+            ▼
+          </span>
+
+        </summary>
+
+        <p className="mt-4 text-gray-600 leading-7">
+          {item.answer}
+        </p>
+
+      </details>
+
+    ))}
+
+  </div>
+
+</div>
+
+{/* Recently Viewed */}
+
+{recentProducts.length > 0 && (
+
+<div className="mt-16">
+
+  <h2 className="text-3xl font-bold mb-8">
+    🕒 Recently Viewed
+  </h2>
+
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+    {recentProducts.map((item) => (
+
+      <div
+        key={item.id}
+        className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition"
+      >
+
+        <img
+          src={item.image}
+          alt={item.name}
+          className="w-full h-52 object-cover"
+        />
+
+        <div className="p-5">
+
+          <h3 className="text-xl font-semibold">
+            {item.name}
+          </h3>
+
+          <p className="text-blue-600 font-bold mt-2">
+            ₹{item.price.toLocaleString()}
+          </p>
+
+          <Link
+            to={`/product/${item.id}`}
+            className="inline-block mt-4 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg"
+          >
+            View Details
+          </Link>
+
+        </div>
+
+      </div>
+
+    ))}
+
+  </div>
+
+</div>
+
+)}
 
 {/* Related Products */}
 

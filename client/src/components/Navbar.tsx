@@ -6,6 +6,8 @@ type NavbarProps = {
   wishlistCount: number;
   compareCount: number;
   setCategory: React.Dispatch<React.SetStateAction<string>>;
+  darkMode: boolean;
+  setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 function Navbar({
@@ -18,13 +20,12 @@ function Navbar({
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
-
-      <div className="w-full flex justify-between items-center px-8 py-4">
+      <div className="w-full flex justify-between items-center px-3 py-4">
 
         {/* Logo */}
         <Link
           to="/"
-          className="text-2xl font-bold text-blue-600"
+          className="text-3xl font-bold text-blue-600"
         >
           Worth Buying
         </Link>
@@ -35,7 +36,7 @@ function Navbar({
           <li>
             <Link
               to="/"
-              className="hover:text-blue-600"
+              className="hover:text-blue-600 transition"
             >
               🏠 Home
             </Link>
@@ -45,13 +46,12 @@ function Navbar({
 
             <button
               onClick={() => setShowCategories(!showCategories)}
-              className="hover:text-blue-600"
+              className="hover:text-blue-600 transition"
             >
               📂 Categories ▼
             </button>
 
             {showCategories && (
-
               <div className="absolute right-0 mt-3 w-56 bg-white rounded-lg shadow-lg border">
 
                 <button
@@ -75,7 +75,6 @@ function Navbar({
                 </button>
 
               </div>
-
             )}
 
           </li>
@@ -83,28 +82,26 @@ function Navbar({
           <li>
             <Link
               to="/wishlist"
-              className="flex items-center gap-2 hover:text-blue-600"
+              className="flex items-center gap-2 hover:text-blue-600 transition"
             >
               ❤️ Wishlist
 
               <span className="bg-blue-600 text-white text-xs px-2 py-1 rounded-full">
                 {wishlistCount}
               </span>
-
             </Link>
           </li>
 
           <li>
             <Link
               to="/compare"
-              className="flex items-center gap-2 hover:text-blue-600"
+              className="flex items-center gap-2 hover:text-blue-600 transition"
             >
               ⚖️ Compare
 
               <span className="bg-blue-600 text-white text-xs px-2 py-1 rounded-full">
                 {compareCount}
               </span>
-
             </Link>
           </li>
 
@@ -125,9 +122,7 @@ function Navbar({
       </div>
 
       {/* Mobile Menu */}
-
       {mobileMenu && (
-
         <div className="md:hidden border-t bg-white">
 
           <Link
@@ -174,8 +169,8 @@ function Navbar({
             ⚖️ Compare ({compareCount})
           </Link>
 
-        </div>
 
+        </div>
       )}
 
     </nav>

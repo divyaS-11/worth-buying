@@ -67,7 +67,8 @@ const matchesSearch =
 
 
   return (
-    <>
+    <div className="bg-white min-h-screen">
+
       <Hero
         search={search}
         setSearch={setSearch}
@@ -75,8 +76,7 @@ const matchesSearch =
         setCategory={setCategory}
       />
 
-      <section className="max-w-7xl mx-auto px-6 py-16">
-
+     <section className="max-w-7xl mx-auto px-6 pt-16 pb-10 bg-white transition-colors duration-300">
         <div className="flex justify-end mb-6">
           <select
             value={sortBy}
@@ -90,7 +90,7 @@ const matchesSearch =
           </select>
         </div>
 
-        <h2 className="text-3xl font-bold text-center mb-10">
+       <h2 className="text-3xl font-bold text-center mb-10 text-gray-900">
           Trending Products
         </h2>
 
@@ -121,7 +121,7 @@ const matchesSearch =
         )}
 
       </section>
-    </>
+    </div>
   );
 }
 
@@ -134,6 +134,7 @@ function App() {
   const [compareList, setCompareList] = useState<number[]>([]);
   const [category, setCategory] = useState("All");
 
+
   useEffect(() => {
   localStorage.setItem("wishlist", JSON.stringify(wishlist));
 }, [wishlist]);
@@ -142,7 +143,7 @@ function App() {
    <>
   <ScrollToTop />
 
-  <Navbar
+ <Navbar
   wishlistCount={wishlist.length}
   compareCount={compareList.length}
   setCategory={setCategory}
