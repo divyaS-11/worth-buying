@@ -70,14 +70,14 @@ function Hero({
 
           {/* Smart Watches */}
           <button
-            onClick={() => setCategory("Smart Watches")}
+            onClick={() => setCategory("Watches")}
             className={`px-6 py-3 rounded-full border transition ${
               category === "Smart Watches"
                 ? "bg-blue-600 text-white border-blue-600"
                 : "bg-white text-gray-800 border-gray-300 hover:bg-blue-600 hover:text-white hover:border-blue-600"
             }`}
           >
-            ⌚ Smart Watches
+            ⌚Watches
           </button>
 
         </div>

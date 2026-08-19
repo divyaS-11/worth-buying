@@ -6,8 +6,6 @@ type NavbarProps = {
   wishlistCount: number;
   compareCount: number;
   setCategory: React.Dispatch<React.SetStateAction<string>>;
-  darkMode: boolean;
-  setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 function Navbar({
@@ -66,12 +64,12 @@ function Navbar({
 
                 <button
                   onClick={() => {
-                    setCategory("Smart Watches");
+                    setCategory("Watches");
                     setShowCategories(false);
                   }}
                   className="block w-full text-left px-4 py-3 hover:bg-gray-100"
                 >
-                  ⌚ Smart Watches
+                  ⌚ Watches
                 </button>
 
               </div>
@@ -145,12 +143,12 @@ function Navbar({
 
           <button
             onClick={() => {
-              setCategory("Smart Watches");
+              setCategory("Watches");
               setMobileMenu(false);
             }}
             className="block w-full text-left px-6 py-4 hover:bg-gray-100"
           >
-            ⌚ Smart Watches
+            ⌚Watches
           </button>
 
           <Link
